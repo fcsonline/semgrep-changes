@@ -13,4 +13,4 @@ offenses = Semgrep::Changes::Checker.new(
   base_branch: args.base_branch
 ).run
 
-exit offenses.count.positive? ? 1 : 0
+exit offenses.positive? ? 1 : 0

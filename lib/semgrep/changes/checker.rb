@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'git_diff_parser'
-require 'rubocop'
 require 'json'
 
 require 'semgrep/changes/check'
@@ -24,7 +23,7 @@ module Semgrep
 
         print_offenses! unless quiet
 
-        checks.map(&:offenses).flatten
+        total_offenses
       end
 
       private
@@ -59,38 +58,50 @@ module Semgrep
 
       def checks
         @checks ||= changed_files.map do |file|
-          analysis = semgrep_json.files.find { |item| item.path == file }
+          analysis = semgrep_json.results.select { |item| item.path == file }
           patch = patches.find { |item| item.file == file }
 
           next unless analysis
 
-          Check.new(analysis, patch)
+          Check.new(file, analysis, patch)
         end.compact
       end
 
-      def offended_lines
-        checks.map(&:offended_lines).flatten.compact
-      end
-
       def total_offenses
-        checks.map { |check| check.offended_lines.size }.inject(0, :+)
+        checks.map { |check| check.offenses.size }.inject(0, :+)
       end
 
       def print_offenses!
+        msg "Findings:"
+        msg ""
+
         checks.each do |check|
           print_offenses_for_check(check)
         end
+
+        msg "Some files were skipped."
+        msg "  Scan was limited to files tracked by git."
+        msg ""
+        msg "Ran 1 rule on 11 files: #{total_offenses} finding."
       end
 
       def print_offenses_for_check(check)
-        offenses = check.offenses.map do |offense|
-          RuboCop::Cop::Offense.new(
-            offense.severity,
-            offense.location,
-            offense.message,
-            offense.cop_name
-          )
+        return unless check.offenses.length > 0
+
+        msg "  #{check.path}"
+        check.offenses.map do |offense|
+          msg "    #{offense.check_id}"
+          msg "      #{offense.extra.message}"
+          msg ""
+          msg "       #{offense.start.line}┆ #{offense.extra.lines&.strip}"
+          msg ""
         end
+      end
+
+      def msg(message)
+        return if ENV['RACK_ENV'] == 'test'
+
+        puts message
       end
     end
   end

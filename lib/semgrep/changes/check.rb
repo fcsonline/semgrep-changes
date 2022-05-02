@@ -3,24 +3,21 @@
 module Semgrep
   module Changes
     class Check
-      def initialize(analysis, patch)
+      def initialize(path, analysis, patch)
+        @path = path
         @analysis = analysis
         @patch = patch
       end
 
       def offenses
-        analysis.offenses.select do |offense|
+        analysis.select do |offense|
           line_numbers.include?(line(offense))
         end
       end
 
-      def path
-        analysis.path
-      end
+      attr_reader :path, :analysis, :patch
 
       private
-
-      attr_reader :analysis, :patch
 
       def line_numbers
         lines_from_diff & lines_from_semgrep
@@ -32,13 +29,12 @@ module Semgrep
 
       def lines_from_semgrep
         analysis
-          .offenses
           .map(&method(:line))
           .uniq
       end
 
       def line(offense)
-        offense.location.line
+        offense.start.line
       end
     end
   end

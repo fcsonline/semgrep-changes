@@ -1,51 +1,62 @@
 {
-  "metadata": {
-    "rubocop_version": "0.76.0",
-    "ruby_engine": "ruby",
-    "ruby_version": "2.5.1",
-    "ruby_patchlevel": "57",
-    "ruby_platform": "x86_64-linux-gnu"
+  "errors": [],
+  "paths": {
+    "_comment": "<add --verbose for a list of skipped paths>",
+    "scanned": [
+      "bin/console",
+      "exe/semgrep-changes",
+      "lib/semgrep/changes/check.rb",
+      "lib/semgrep/changes/checker.rb",
+      "lib/semgrep/changes/options.rb",
+      "lib/semgrep/changes/shell.rb",
+      "lib/semgrep/changes/version.rb",
+      "lib/semgrep/changes.rb",
+      "spec/semgrep/changes/checker_spec.rb",
+      "spec/semgrep/changes_spec.rb",
+      "spec/spec_helper.rb"
+    ]
   },
-  "files": [
+  "results": [
     {
-      "path": "lib/rubocop/changes/checker.rb",
-      "offenses": [
-        {
-          "severity": "convention",
-          "message": "Metrics/AbcSize: Assignment Branch Condition size for run is too high. [<2, 21, 1> 21.12/15]",
-          "cop_name": "Metrics/AbcSize",
-          "corrected": false,
-          "location": {
-            "start_line": 15,
-            "start_column": 7,
-            "last_line": 39,
-            "last_column": 9,
-            "length": 661,
-            "line": 15,
-            "column": 7
+      "check_id": "dont-use-method",
+      "end": {
+        "col": 30,
+        "line": 36,
+        "offset": 661
+      },
+      "extra": {
+        "fingerprint": "3e147ddd6d0fd5fcac573d55fed06f63",
+        "is_ignored": false,
+        "lines": "          .map(&method(:line)) # Change me",
+        "message": "Do not use &method calls",
+        "metadata": {},
+        "metavars": {
+          "$X": {
+            "abstract_content": ":line",
+            "end": {
+              "col": 29,
+              "line": 32,
+              "offset": 660
+            },
+            "start": {
+              "col": 24,
+              "line": 32,
+              "offset": 655
+            },
+            "unique_id": {
+              "md5sum": "40c9f87071f22c1b4224ab74d16ba29c",
+              "type": "AST"
+            }
           }
         },
-        {
-          "severity": "convention",
-          "message": "Metrics/MethodLength: Method has too many lines. [16/10]",
-          "cop_name": "Metrics/MethodLength",
-          "corrected": false,
-          "location": {
-            "start_line": 15,
-            "start_column": 7,
-            "last_line": 39,
-            "last_column": 9,
-            "length": 661,
-            "line": 15,
-            "column": 7
-          }
-        }
-      ]
+        "severity": "ERROR"
+      },
+      "path": "lib/semgrep/changes/check.rb",
+      "start": {
+        "col": 17,
+        "line": 32,
+        "offset": 648
+      }
     }
-  ],
-  "summary": {
-    "offense_count": 2,
-    "target_file_count": 1,
-    "inspected_file_count": 1
-  }
+  ]
 }

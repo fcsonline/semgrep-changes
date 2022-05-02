@@ -44,16 +44,14 @@ RSpec.describe Semgrep::Changes::Checker do
 
   context 'when the fork point is known' do
     let(:diff_files) do
-      %w[lib/semgrep/changes/checker.rb spec/semgrep/changes/checker_spec.rb]
+      %w[lib/semgrep/changes/check.rb]
     end
 
     let(:git_diff) { File.read('spec/semgrep/changes/sample.diff') }
     let(:offenses) { File.read('spec/semgrep/changes/semgrep.json') }
 
     let(:total_offenses) do
-      JSON.parse(offenses)['files'].map do |file|
-        file['offenses'].count
-      end.inject(:+)
+      JSON.parse(offenses)['results'].count
     end
 
     it 'runs a git diff' do
@@ -65,8 +63,8 @@ RSpec.describe Semgrep::Changes::Checker do
         'git diff deadbeef'
       ).and_return(git_diff)
 
-      expect(total_offenses).to be(2)
-      expect(subject.size).to be(0)
+      expect(total_offenses).to be(1)
+      expect(subject).to be(0)
     end
 
     context 'by given commit id' do
@@ -81,8 +79,8 @@ RSpec.describe Semgrep::Changes::Checker do
           'git diff deadbeef'
         ).and_return(git_diff)
 
-        expect(total_offenses).to be(2)
-        expect(subject.size).to be(0)
+        expect(total_offenses).to be(1)
+        expect(subject).to be(0)
       end
     end
 
@@ -96,7 +94,7 @@ RSpec.describe Semgrep::Changes::Checker do
           'git diff deadbeef'
         ).and_return(git_diff)
 
-        expect(subject.size).to be(0)
+        expect(subject).to be(0)
       end
     end
   end

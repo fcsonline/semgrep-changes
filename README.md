@@ -3,9 +3,9 @@
 [![Gem Version](https://img.shields.io/gem/v/semgrep-changes)](https://rubygems.org/gems/semgrep-changes)
 [![Build Status](https://github.com/fcsonline/semgrep-changes/actions/workflows/ci.yml/badge.svg)](https://github.com/fcsonline/semgrep-changes/actions/workflows/ci.yml)
 
-`semgrep-changes` runs rubocop and shows only the offenses you introduced since
-the fork point of your git branch. Will not complain about existing offenses in
-your main branch.
+`semgrep-changes` shows only the offenses you introduced since the fork point
+of your git branch. Will not complain about existing offenses in your main
+branch.
 
 This is useful for CI checks for your pull requests but it could be useful too
 for you daily work, to know new offenses created by you.
@@ -50,4 +50,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Rubocop::Changes project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fcsonline/semgrep-changes/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Semgrep::Changes project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fcsonline/semgrep-changes/blob/master/CODE_OF_CONDUCT.md).
