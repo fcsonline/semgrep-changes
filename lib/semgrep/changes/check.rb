@@ -29,7 +29,7 @@ module Semgrep
 
       def lines_from_semgrep
         analysis
-          .map(&method(:line))
+          .map(&method(:line)) # Change me
           .uniq
       end
 
