@@ -1,0 +1,6 @@
+rules:
+- id: dont-use-method
+  pattern: method($X)
+  message: Do not use &method calls
+  languages: [ruby]
+  severity: ERROR

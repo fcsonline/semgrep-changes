@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'semgrep/changes/checker'
+require 'semgrep/changes/options'
+
+args = Semgrep::Changes::Options.new.parse!
+
+offenses = Semgrep::Changes::Checker.new(
+  report: args.report,
+  quiet: args.quiet,
+  commit: args.commit,
+  base_branch: args.base_branch
+).run
+
+exit offenses.count.positive? ? 1 : 0
